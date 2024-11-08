@@ -3,9 +3,14 @@ from .models import Livros, Categorias
 from .schemas import LivroSchema
 from .schemas import AvaliacaoSchema
 from .schemas import FiltrosSortear
-
+from .schemas import LivrosViewScrema
 
 livros_router = Router()
+
+@livros_router.get('/', response={200: list[LivrosViewScrema]})
+def get_livro(request):
+    livros = Livros.objects.all()
+    return livros
 
 @livros_router.post('/', response={200: LivroSchema})
 def create_livro(request, livro_schema: LivroSchema):
